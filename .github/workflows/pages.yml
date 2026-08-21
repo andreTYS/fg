@@ -1,3 +1,4 @@
+# Pages source is set to "GitHub Actions" in repo Settings → Pages.
 name: Deploy static site to GitHub Pages
 
 on:
