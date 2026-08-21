@@ -319,6 +319,22 @@ em { color: var(--accent); font-style: normal; }
 .kv-list li:last-child { border-bottom: none; }
 .kv-list span { color: var(--text-faint); }
 .kv-list strong { text-align: right; font-weight: 600; }
+.kv-list a { color: var(--accent); text-decoration: none; }
+.kv-list a:hover { text-decoration: underline; }
+.kv-list a:focus-visible {
+  text-decoration: underline;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.profile-extra {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+.profile-extra h3 { color: var(--text-faint); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px; }
+.small-muted { font-size: 0.88rem; color: var(--text-dim); margin: 0; }
 
 /* Stack */
 .stack-grid {
@@ -536,6 +552,44 @@ em { color: var(--accent); font-style: normal; }
 }
 .clients-box h3 { color: var(--text-faint); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 14px; }
 .clients-box .tags span { font-size: 0.8rem; }
+
+.education-box {
+  margin-top: 44px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.education-box h3 { color: var(--text-faint); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 18px; }
+.education-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+.education-grid h4 { margin: 0 0 6px; font-size: 0.98rem; }
+.education-grid .timeline-meta { margin-bottom: 0; }
+
+/* Certifications */
+.cert-list {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cert-list li {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  font-size: 0.92rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+}
+.cert-list .timeline-meta { margin-bottom: 0; }
 
 /* Repos */
 .repo-grid {
