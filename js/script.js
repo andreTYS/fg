@@ -48,3 +48,37 @@ if ('IntersectionObserver' in window && revealItems.length) {
     revealItems.forEach((item) => item.classList.add('is-visible'));
   }, 2000);
 }
+
+// Count up the hero stats once they scroll into view. Each element's
+// static text (e.g. "10+") is already the correct final value, so a
+// failure here just leaves that number showing instead of animating.
+const statEls = document.querySelectorAll('[data-count-to]');
+if ('IntersectionObserver' in window && statEls.length) {
+  const animateStat = (el) => {
+    const target = parseInt(el.dataset.countTo, 10);
+    const suffix = el.dataset.suffix || '';
+    if (!Number.isFinite(target)) return;
+    const duration = 1000;
+    const start = performance.now();
+    const step = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(target * eased) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  const statObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateStat(entry.target);
+          statObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+  statEls.forEach((el) => statObserver.observe(el));
+}
