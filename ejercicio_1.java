@@ -1,4 +1,5 @@
 import java.util.Scanner;
+//Bro, ¿como encontraste esto?
 public class ejercicio_1 {
     public static void main(String[] args) {
     int m[][],AT[][],s[][];
