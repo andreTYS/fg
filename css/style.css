@@ -736,8 +736,11 @@ html:not(.reveal-ready) .skill-bar-fill { width: var(--fill); }
 .cover-8  { background-color: #4a3f1f; }
 .cover-9  { background-color: #2d4a6b; }
 .cover-10 { background-color: #6b5420; }
+.cover-11 { background-color: #27496d; }
+.cover-12 { background-color: #4f3e1a; }
 .cover-1, .cover-2, .cover-3, .cover-4, .cover-5,
-.cover-6, .cover-7, .cover-8, .cover-9, .cover-10 {
+.cover-6, .cover-7, .cover-8, .cover-9, .cover-10,
+.cover-11, .cover-12 {
   background-blend-mode: overlay, normal, normal;
 }
 
