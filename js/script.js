@@ -82,3 +82,54 @@ if ('IntersectionObserver' in window && statEls.length) {
   );
   statEls.forEach((el) => statObserver.observe(el));
 }
+
+// Scroll progress bar + back-to-top button + active nav link, all driven
+// by a single scroll listener (rAF-throttled to avoid layout thrashing).
+const scrollProgress = document.getElementById('scrollProgress');
+const backToTop = document.getElementById('backToTop');
+const navLinks = Array.from(nav.querySelectorAll('a[href^="#"]'));
+const sections = navLinks
+  .map((link) => document.querySelector(link.getAttribute('href')))
+  .filter(Boolean);
+let scrollTicking = false;
+
+function setActiveLink(id) {
+  navLinks.forEach((link) => {
+    link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+  });
+}
+
+function updateOnScroll() {
+  const doc = document.documentElement;
+  const scrollable = doc.scrollHeight - doc.clientHeight;
+  const progress = scrollable > 0 ? (doc.scrollTop / scrollable) * 100 : 0;
+  if (scrollProgress) scrollProgress.style.setProperty('--scroll-progress', `${progress}%`);
+  if (backToTop) backToTop.classList.toggle('visible', doc.scrollTop > 600);
+  // The intersection-based active link can miss the last section once the
+  // page can't scroll any further to center it, so force it at the bottom.
+  if (scrollable > 0 && doc.scrollTop >= scrollable - 2 && sections.length) {
+    setActiveLink(sections[sections.length - 1].id);
+  }
+  scrollTicking = false;
+}
+
+window.addEventListener('scroll', () => {
+  if (!scrollTicking) {
+    requestAnimationFrame(updateOnScroll);
+    scrollTicking = true;
+  }
+}, { passive: true });
+updateOnScroll();
+
+// Highlight the nav link for whichever section is currently in view.
+if ('IntersectionObserver' in window && sections.length) {
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setActiveLink(entry.target.id);
+      });
+    },
+    { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+  );
+  sections.forEach((section) => sectionObserver.observe(section));
+}
